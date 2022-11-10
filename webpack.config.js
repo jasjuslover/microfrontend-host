@@ -36,7 +36,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "Host",
       remotes: {
-        Auth: `Auth@http://192.168.100.39:4000/moduleEntry.js`,
+        Auth: `Auth@https://microfrontend-remote.vercel.app/moduleEntry.js`,
       },
       shared: {
         ...dependencies,
