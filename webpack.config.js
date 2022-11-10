@@ -27,8 +27,16 @@ module.exports = {
         use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
-        test: /\.svg$/,
-        use: ["@svgr/webpack"],
+        test: /.(png|jpg|woff|woff2|eot|ttf|svg|gif|ico)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10000,
+              name: ".[ext]", //Path will be assets or image path
+            },
+          },
+        ],
       },
     ],
   },
@@ -36,7 +44,7 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "Host",
       remotes: {
-        Auth: `Auth@https://microfrontend-remote.vercel.app/moduleEntry.js`,
+        Auth: `Auth@http://localhost:4000/moduleEntry.js`,
       },
       shared: {
         ...dependencies,
@@ -52,6 +60,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
+      favicon: "./public/favicon.ico"
     }),
   ],
   resolve: {
